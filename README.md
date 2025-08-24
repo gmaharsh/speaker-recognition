@@ -17,8 +17,3 @@ An end-to-end pipeline for **speaker diarization and recognition** in multi-spea
 - `src/`: Core code (preprocessing, VAD, embeddings, diarization, evaluation).
 - `notebooks/`: Experiments and visualizations.
 - `scripts/`: Utility scripts like dataset download.
-
-## Next Steps
-- Implement preprocessing and VAD.
-- Download AMI/LibriSpeech dataset for testing.
-- Add diarization and evaluation logic.
