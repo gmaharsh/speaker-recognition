@@ -53,8 +53,18 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Preprocess raw audio files.")
     parser.add_argument("--config", default="config.yaml", help="Path to config file.")
     parser.add_argument("--input", required=True, help="Path to raw audio")
-    parser.add_argument("--plot", required=True, help="Show before/after waveforms")
+    parser.add_argument("--plot", action="store_true", help="Show before/after waveforms")
     args = parser.parse_args()
+    input_path = Path(args.input)
+
+    exts_allowed = [".wav", ".flac", ".mp3", ".mp4", ".ogg", ".m4a"]
+
+    if input_path.is_file():
+        files_to_process = [input_path]
+    elif input_path.is_dir():
+        files_to_process = [f for f in input_path.glob("**/*") if f.suffix.lower() in exts_allowed]
+    else:
+        raise ValueError(f"Invalid input path: {args.input}")
 
     cfg = yaml.safe_load(open(args.config))
     out_dir = cfg["paths"]["interim_dir"]
@@ -63,5 +73,19 @@ if __name__ == "__main__":
     file_name = os.path.splitext(os.path.basename(args.input))[0] + ".wav"
     output_path = os.path.join(out_dir, file_name)
 
-    preprocess_audio(args.input,output_path, target_sr = cfg["preprocess"]["target_sr"], mono = cfg["preprocess"]["mono"], normalize = cfg["preprocess"]["normalize"], plot= args.plot)
+    if not files_to_process:
+        print(f"No audio files found in {args.input} with extensions {exts}")
+    else:
+        for file in files_to_process:
+            file_stem = file.stem  # filename without extension
+            output_path = os.path.join(out_dir, file_stem + ".wav")
+            print(f"\n[PROCESSING] {file} -> {output_path}")
+            preprocess_audio(
+                input_path=str(file),
+                output_path=output_path,
+                target_sr=cfg["preprocess"]["target_sr"],
+                mono=cfg["preprocess"]["mono"],
+                normalize=cfg["preprocess"]["normalize"],
+                plot=args.plot,
+            )
         
