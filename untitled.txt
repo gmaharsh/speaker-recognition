@@ -1,0 +1,16 @@
+# Ignore data directories except configs
+data/*
+!data/.gitkeep  # Optional: keep empty folders tracked
+
+# Ignore Python cache & environment files
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv
+*.ipynb_checkpoints
+
+# OS and IDE files
+.DS_Store
+.vscode/
+.idea/

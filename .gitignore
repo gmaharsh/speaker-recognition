@@ -1,0 +1,17 @@
+# Ignore data directories except configs
+data/*
+!data/.gitkeep
+
+# Python cache and env files
+__pycache__/
+*.pyc
+*.pyo
+.env
+.venv
+*.ipynb_checkpoints
+
+# OS and IDE files
+.DS_Store
+.vscode/
+.idea/
+

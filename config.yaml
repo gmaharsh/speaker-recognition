@@ -1,0 +1,17 @@
+paths:
+    raw_dir: data/raw
+    interim_dir: data/interim
+    vad_dir: data/vad
+    diar_dir: data/diarization
+    transcripts_dir: data/transcripts
+    eval_dir: data/eval
+
+preprocess:
+    target_sr: 16000
+    mono: true
+    normalize: true
+
+vad:
+    backend: silero
+    sampling_rate: 16000
+    
